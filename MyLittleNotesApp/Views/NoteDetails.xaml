@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="MyLittleNotesApp.Views.NoteDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyLittleNotesApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" DataContext="{StaticResource MainViewModel}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Original Note:" Grid.Row="0" Grid.ColumnSpan="3" FontWeight="ExtraBold" IsColorFontEnabled="True" FontSize="45" FontFamily="Helvetika"/>
+        <TextBlock Text="{Binding Path=SelectedNote.Content, Mode=OneWay}" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <TextBlock Text="New Note:" Grid.Row="2" Grid.ColumnSpan="3" FontWeight="ExtraBold" FontFamily="Helvetika" FontSize="45"/>
+        <TextBox x:Name="Content" Text="{Binding Path=NewNoteContent, Mode=TwoWay}" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
+        <Button x:Name="EditNote" Click="{x:Bind ViewModel.EditNote}" Content="Edit Note" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Button>
+        <Button x:Name="Delete" Click="{x:Bind ViewModel.DeleteNote}" Content="Delete" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+        <Button x:Name="Cancel" Click="{x:Bind ViewModel.Cancel}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="2" Content="Cancel"></Button>
+        
+
+    </Grid>
+</Page>

@@ -1,0 +1,29 @@
+﻿<Page
+    x:Class="MyLittleNotesApp.Views.SettignsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyLittleNotesApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{StaticResource MainViewModel}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBox x:Name="NumberOfRows" Text="{Binding Path=ContentShownInRead, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="NumberValidationTextBox"/>
+        <CheckBox x:Name="AscendingDescending" IsChecked="{Binding Path=Ascending, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >Ascending/Descending</CheckBox>
+        <Button x:Name="Save" Click="{x:Bind ViewModel.Save}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Save" FontFamily="Helvetika" FontSize="25" FontWeight="ExtraBold"/>
+        <Button x:Name="Load" Click="{x:Bind ViewModel.Load}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Load" FontFamily="Helvetika" FontSize="25" FontWeight="ExtraBold"/>
+    </Grid>
+</Page>
+
