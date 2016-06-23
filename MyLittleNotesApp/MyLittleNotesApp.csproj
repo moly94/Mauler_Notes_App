@@ -92,6 +92,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\pin.png" />
     <Content Include="Views\Rainbo_Schwan.png" />
     <Content Include="Helvetika.ttf" />
     <None Include="project.json" />
@@ -102,6 +103,7 @@
     </Compile>
     <Compile Include="Converters\ObjectConverter.cs" />
     <Compile Include="Models\Note.cs" />
+    <Compile Include="Services\CloudDataService.cs" />
     <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Services\LocalStorageService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

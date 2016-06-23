@@ -5,12 +5,50 @@
     xmlns:local="using:MyLittleNotesApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:models="using:MyLittleNotesApp.Models"
     mc:Ignorable="d" DataContext="{StaticResource MainViewModel}">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateMin800">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualStateMin0">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AbstractTextBlock.(RelativePanel.AlignTopWithPanel)" Value="True" />
+                        <Setter Target="AbstractTextBlock.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="SessionsListView.(RelativePanel.Above)" Value="AbstractTextBlock" />
+                        <Setter Target="SessionsListView.(RelativePanel.AlignBottomWithPanel)" Value="True" />
+                        <Setter Target="SessionsListView.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="AbstractTextBlock.(FrameworkElement.Height)" Value="500" />
+                        <Setter Target="AbstractTextBlock.(FrameworkElement.Width)" Value="NaN" />
+                        <Setter Target="AbstractTextBlock.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>12</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                  RelativePanel.AlignBottomWithPanel="True"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignTopWithPanel="True"
+              RelativePanel.AlignRightWithPanel="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -23,10 +61,32 @@
         <TextBlock Text="{Binding Path=SelectedNote.Content, Mode=OneWay}" Grid.Row="1" Grid.ColumnSpan="3"/>
         <TextBlock Text="New Note:" Grid.Row="2" Grid.ColumnSpan="3" FontWeight="ExtraBold" FontFamily="Helvetika" FontSize="45"/>
         <TextBox x:Name="Content" Text="{Binding Path=NewNoteContent, Mode=TwoWay}" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
-        <Button x:Name="EditNote" Click="{x:Bind ViewModel.EditNote}" Content="Edit Note" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Button>
-        <Button x:Name="Delete" Click="{x:Bind ViewModel.DeleteNote}" Content="Delete" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-        <Button x:Name="Cancel" Click="{x:Bind ViewModel.Cancel}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="2" Content="Cancel"></Button>
-        
+        <Button x:Name="EditNote" Click="{x:Bind ViewModel.EditNote}" Content="Edit Note" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Button>
+        <Button x:Name="Delete" Click="{x:Bind ViewModel.DeleteNote}" Content="Delete" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+        <Button x:Name="Cancel" Click="{x:Bind ViewModel.Cancel}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="2" Content="Cancel"></Button>
 
+        <maps:MapControl x:Name="map"
+                         Style="{x:Bind ViewModel.MapStyle, Mode=OneWay}"
+                         Center="{x:Bind ViewModel.Center, Mode=OneWay}"
+                         DesiredPitch="{x:Bind ViewModel.Pitch, Mode=OneWay}"
+                         Heading="{x:Bind ViewModel.Orientation, Mode=OneWay}"
+                         ZoomLevel="{x:Bind ViewModel.Zoomlevel, Mode=TwoWay}"
+                         Grid.Row="4" Grid.ColumnSpan="3"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch">
+            <!--MapServiceToken="{x:Bind ViewModel.Token}"-->
+            <maps:MapItemsControl ItemsSource="{x:Bind ViewModel.Notes}">
+                <maps:MapItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:Note">
+                        <Grid maps:MapControl.Location="{x:Bind Geopoint}"
+                              maps:MapControl.NormalizedAnchorPoint="0.5 1">
+                            <Image Source="..\Assets\pin.png" />
+                        </Grid>
+                    </DataTemplate>
+                </maps:MapItemsControl.ItemTemplate>
+            </maps:MapItemsControl>
+
+        </maps:MapControl>
     </Grid>
+        </RelativePanel>
 </Page>
